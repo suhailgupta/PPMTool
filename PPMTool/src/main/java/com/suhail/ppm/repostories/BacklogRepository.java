@@ -9,4 +9,5 @@ import com.suhail.ppm.domain.Backlog;
 public interface BacklogRepository extends CrudRepository<Backlog, Long>{
 	
 
+	 Backlog findByProjectIdentifier(String identifier);
 }

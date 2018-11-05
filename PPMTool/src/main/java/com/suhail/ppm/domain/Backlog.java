@@ -1,9 +1,19 @@
 package com.suhail.ppm.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Backlog {
@@ -14,9 +24,16 @@ public class Backlog {
 	private Integer PTSequence=0;
 	
 	private String projectIdentifier;
+	
 	//One to One with Project
+	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="project_id",nullable=false)
+	@JsonIgnore
+	private Project project;
 	
 	// One to Many Project Tasks 
+	@OneToMany(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER,mappedBy="backlog",orphanRemoval=true)
+	private List<ProjectTask> projectTasks = new ArrayList<>();
 	
 	public Backlog() {
 
@@ -44,6 +61,22 @@ public class Backlog {
 
 	public void setProjectIdentifier(String projectIdentifier) {
 		this.projectIdentifier = projectIdentifier;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public List<ProjectTask> getProjectTasks() {
+		return projectTasks;
+	}
+
+	public void setProjectTasks(List<ProjectTask> projectTasks) {
+		this.projectTasks = projectTasks;
 	}
 	
 }

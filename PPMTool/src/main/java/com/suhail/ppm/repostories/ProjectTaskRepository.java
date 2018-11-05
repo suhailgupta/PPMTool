@@ -1,9 +1,16 @@
 package com.suhail.ppm.repostories;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ProjectTaskRepository extends CrudRepository<ProjectTaskRepository, Long> {
+import com.suhail.ppm.domain.ProjectTask;
 
+@Repository
+public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long> {
+
+	List<ProjectTask> findByProjectIdentifierOrderByPriority(String id);
+	
+	ProjectTask findByProjectSequence(String sequence);
 }
