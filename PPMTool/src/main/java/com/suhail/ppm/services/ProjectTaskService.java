@@ -44,7 +44,7 @@ public class ProjectTaskService {
 			projectTask.setProjectSequence(projectIdentifier + "--" + backlogSequence);
 			projectTask.setProjectIdentifier(projectIdentifier);
 			// INITIAL Priority when priority null
-			if (projectTask.getPriority() == null) {
+			if (projectTask.getPriority() == 0 || projectTask.getPriority() == null) {
 				projectTask.setPriority(3);
 			}
 			// Initial Status when status is null
@@ -91,28 +91,28 @@ public class ProjectTaskService {
 		return projectTask;
 	}
 
-	public ProjectTask updateByProjectSequence(ProjectTask updatedTask,String backlog_id,String pt_id) {
+	public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String pt_id) {
 
 		// Update project task
 		// find existing project task
 //		ProjectTask projectTask=projectTaskRepository.findByProjectSequence(pt_id);
-		ProjectTask projectTask=findPTByProjectSequence(backlog_id,pt_id);
+		ProjectTask projectTask = findPTByProjectSequence(backlog_id, pt_id);
 		// replace it with updated task
-		projectTask=updatedTask;
+		projectTask = updatedTask;
 		// save update
 		return projectTaskRepository.save(projectTask);
 	}
 
-	
-	public void deletePTByProjectSequence(String backlog_id,String pt_id) {
-		
-		ProjectTask projectTask=findPTByProjectSequence(backlog_id,pt_id);
-		
-/*		Backlog backlog = projectTask.getBacklog();
-		List<ProjectTask> projectTasks = backlog.getProjectTasks();
-		projectTasks.remove(projectTask);
-		backlogRepository.save(backlog);*/
-		
+	public void deletePTByProjectSequence(String backlog_id, String pt_id) {
+
+		ProjectTask projectTask = findPTByProjectSequence(backlog_id, pt_id);
+
+		/*
+		 * Backlog backlog = projectTask.getBacklog(); List<ProjectTask> projectTasks =
+		 * backlog.getProjectTasks(); projectTasks.remove(projectTask);
+		 * backlogRepository.save(backlog);
+		 */
+
 		projectTaskRepository.delete(projectTask);
 	}
 }
