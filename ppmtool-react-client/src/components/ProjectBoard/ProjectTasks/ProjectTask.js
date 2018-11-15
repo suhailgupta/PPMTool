@@ -33,8 +33,9 @@ class ProjectTask extends Component {
             {project_task.acceptanceCriteria}
           </p>
           <Link
-            to={`/updateProjectTask/${project_task.projectIdentifier}/$
-            {project_task.projectSequence}`}
+            to={`/updateProjectTask/${project_task.projectIdentifier}/${
+              project_task.projectSequence
+            }`}
             className="btn btn-primary"
           >
             View / Update
