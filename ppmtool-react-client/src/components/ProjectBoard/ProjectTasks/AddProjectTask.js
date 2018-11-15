@@ -14,7 +14,7 @@ class AddProjectTask extends Component {
       acceptanceCriteria: "",
       status: "",
       priority: 0,
-      dueDate: null,
+      dueDate: "",
       projectIdentifier: id,
       errors: {}
     };
