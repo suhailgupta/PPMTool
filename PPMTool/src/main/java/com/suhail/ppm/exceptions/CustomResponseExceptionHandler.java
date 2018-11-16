@@ -10,20 +10,29 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @RestController
-public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandler{
+public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler
-	public final ResponseEntity<Object> handleProjectIdException(ProjectIdException ex, WebRequest request){
-		
-		ProjectIdExceptionResponse response=new ProjectIdExceptionResponse(ex.getMessage());
-		return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+	public final ResponseEntity<Object> handleProjectIdException(ProjectIdException ex, WebRequest request) {
+
+		ProjectIdExceptionResponse response = new ProjectIdExceptionResponse(ex.getMessage());
+		return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler
-	public final ResponseEntity<Object> handleProjectNotFoundException(ProjectNotFoundException ex, WebRequest request){
-		
-		ProjectNotFoundExceptionResponse response=new ProjectNotFoundExceptionResponse(ex.getMessage());
-		return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+	public final ResponseEntity<Object> handleProjectNotFoundException(ProjectNotFoundException ex,
+			WebRequest request) {
+
+		ProjectNotFoundExceptionResponse response = new ProjectNotFoundExceptionResponse(ex.getMessage());
+		return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 	}
-	
+
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex,
+			WebRequest request) {
+
+		UsernameAlreadyExistsResponse response = new UsernameAlreadyExistsResponse(ex.getMessage());
+		return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+	}
+
 }
