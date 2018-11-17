@@ -1,13 +1,18 @@
 package com.suhail.ppm.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
@@ -20,29 +25,40 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Email(message = "Username needs to be an email")
-	@NotBlank(message="Username is required")
-	@Column(unique=true)
+	@NotBlank(message = "Username is required")
+	@Column(unique = true)
 	private String username;
-	@NotBlank(message="Please enter your full name")
+	@NotBlank(message = "Please enter your full name")
 	private String fullName;
-	@NotBlank(message="Passsword field is required")
+	@NotBlank(message = "Passsword field is required")
 	private String password;
-	
+
 	@Transient
 	private String confirmPassword;
 	private Date create_At;
 	private Date update_At;
-	
-	//OneToMany with Project
-	
+
+	// OneToMany with Project
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+	private List<Project> projects = new ArrayList<>();
+
 	public User() {
-		
+
+	}
+
+	
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	public Long getId() {
@@ -100,19 +116,19 @@ public class User implements UserDetails{
 	public void setUpdate_At(Date update_At) {
 		this.update_At = update_At;
 	}
-	
+
 	@PrePersist
 	protected void onCreate() {
-		this.create_At= new Date();
+		this.create_At = new Date();
 	}
-	
+
 	@PreUpdate
 	protected void onUpdate() {
-		this.update_At= new Date();
+		this.update_At = new Date();
 	}
 	/*
 	 * User Details interface methods
-	 * */
+	 */
 
 	@Override
 	@JsonIgnore
@@ -143,6 +159,5 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
+
 }
