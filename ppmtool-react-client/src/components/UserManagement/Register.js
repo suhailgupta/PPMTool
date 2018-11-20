@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { createNewUser } from "../../actions/securityActions";
-import PropTypes from "proptypes";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 
